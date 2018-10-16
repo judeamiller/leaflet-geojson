@@ -48,26 +48,54 @@ var geojsonMarkerOptions = {
 //     }
 // }).addTo(map);
 
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
+// function onEachFeature(feature, layer) {
+//     // does this feature have a property named popupContent?
+//     if (feature.properties && feature.properties.popupContent) {
+//         layer.bindPopup(feature.properties.popupContent);
+//     }
+// }
 
-var geojsonFeature = {
+// var geojsonFeature = {
+//     "type": "Feature",
+//     "properties": {
+//         "name": "Coors Field",
+//         "amenity": "Baseball Stadium",
+//         "popupContent": "This is where the Rockies play!"
+//     },
+//     "geometry": {
+//         "type": "Point",
+//         "coordinates": [-104.99404, 39.75621]
+//     }
+// };
+
+// L.geoJSON(geojsonFeature, {
+//     onEachFeature: onEachFeature
+// }).addTo(map);
+
+var someFeatures = [{
     "type": "Feature",
     "properties": {
         "name": "Coors Field",
-        "amenity": "Baseball Stadium",
-        "popupContent": "This is where the Rockies play!"
+        "show_on_map": true
     },
     "geometry": {
         "type": "Point",
         "coordinates": [-104.99404, 39.75621]
     }
-};
+}, {
+    "type": "Feature",
+    "properties": {
+        "name": "Busch Field",
+        "show_on_map": false
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-104.98404, 39.74621]
+    }
+}];
 
-L.geoJSON(geojsonFeature, {
-    onEachFeature: onEachFeature
+L.geoJSON(someFeatures, {
+    filter: function(feature, layer) {
+        return feature.properties.show_on_map;
+    }
 }).addTo(map);
